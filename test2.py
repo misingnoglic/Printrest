@@ -34,27 +34,48 @@ username = str(raw_input("What is your username: "))
 board = str(raw_input("What board would you like to print: "))
 b = Board(username+"/"+board)
 URLDIMS = ListOfURLS(b)
-blank = raw_input("Press enter if you are you sure you want to print "+str(len(URLDIMS))+" postcards ($1 each)")
+blank = raw_input("Type 'skip' to skip previewing the  "+str(len(URLDIMS))+" postcards ($1 each): ")
+if blank=="skip":
+    DownloadPics([i[0][0] for i in URLDIMS])
+    GoodDims=URLDIMS
 #DownloadPics([i[0][0] for i in URLDIMS])
-#GoodDims = []
-GoodDims=[]
-number = 0
-for x in URLDIMS:
-    SingleDownload(x[0][0])
-    imageshow(x[2])
-    global GLOBALBOOL
-   # print(GLOBALBOOL)
-  #  print(imageload.GLOBALBOOL)
-    if (imageload.GLOBALBOOL):
-        os.rename(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\temporary.jpg",r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(number)+".jpg")
-        #raw_input("RENAMED!!")
-        GoodDims+=[x]
-        number+=1
-    else:
-        os.remove(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\temporary.jpg")
+
+else:     
+    GoodDims=[]
+    number = 0
+    for x in URLDIMS:
+        SingleDownload(x[0][0])
+        imageshow(x[2])
+        global GLOBALBOOL
+       # print(GLOBALBOOL)
+      #  print(imageload.GLOBALBOOL)
+        if (imageload.GLOBALBOOL):
+            os.rename(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\temporary.jpg",r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(number)+".jpg")
+            #raw_input("RENAMED!!")
+            GoodDims+=[x]
+            number+=1
+        else:
+            os.remove(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\temporary.jpg")
 
 for x in range(len(GoodDims)):
-    print GoodDims[x][1]
-    if GoodDims[x][1][0]>GoodDims[x][1][1]:
-        rotat = Image.open(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg")
+    #print GoodDims[x][1]
+    width,height =  GoodDims[x][1][0][0],GoodDims[x][1][0][1]
+    rotat = Image.open(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg")
+    if GoodDims[x][1][0][0]>GoodDims[x][1][0][1]:
         (rotat.rotate(90,0,1)).save(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg")
+
+    ##The whitespace format
+    bg = Image.open("white4b6.jpg")
+    if (float(height)/width)>=(6.0/4):
+        big = bg.resize(((int(height*(4.0/6))),height))
+        box = (int(height*(4.0/6 - width)/2), 0, width+int(height*(4.0/6 - width)/2), height)
+        big.paste(rotat, box)
+        big.save(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg")
+    else:
+        big = bg.resize((width,int(width*(6.0/4))))
+        box = (0,(int((width*(6.0/4)-height)/2)),width, height+(int((width*(6.0/4)-height)/2)))
+        big.paste(rotat, box)
+        big.save(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg")
+
+        
+        
