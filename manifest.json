@@ -5,6 +5,9 @@
   "description": "My first Chrome extension.",
   "browser_action": {
     "default_icon": "icon.png",
-    "popup": "popup.html"
-  }
+    "popup": "popup.html",
+    $.getJSON("api.pinterest.com/v3/boards/<board_spec:board>/")
+   }
+
+  
 }
