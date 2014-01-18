@@ -1,25 +1,29 @@
 import Tkinter as tk
 from PIL import Image, ImageTk
 import os
-GLOBALBOOL = False
+import urllib
+
+GLOBALBOOL = None
 
 def accepted():
     global GLOBALBOOL
     GLOBALBOOL = True
+    #print("THIS SHOULD BE TRUE")
 def yesno(str):
     if str in ['y','yes','1']: return True
     if str in ['n','no','0']: return False
     else: return False
-    
-def imageshow(x):
+
+def imageshow(img):
     global GLOBALBOOL
     GLOBALBOOL= False
     root = tk.Tk()
-    root.title('Postcard')
+    root.title(img[2])
 
     # pick an image file you have .bmp  .jpg  .gif.  .png
     # load the file and covert it to a Tkinter image object
-    imageFile = "C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg"
+#    imageFile = "C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg"
+    imageFile = r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\temporary.jpg"
     image1 = ImageTk.PhotoImage(Image.open(imageFile))
 
     # get the image size
@@ -45,8 +49,8 @@ def imageshow(x):
     panel1.image = image1
     # start the event loop
     root.mainloop()
-    global GLOBALBOOL
-    print GLOBALBOOL
+  #  global GLOBALBOOL
+  #  print GLOBALBOOL
     #return yesno(raw_input("Keep this Picture?: "))
     
     
