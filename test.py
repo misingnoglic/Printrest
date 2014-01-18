@@ -1,6 +1,6 @@
-from pinterest.models.model import Pinterest
-	
-CLIENT_ID = "your app's client id"
-CLIENT_SECRET = "your app's secret"
-Pinterest.configure_client(CLIENT_ID, CLIENT_SECRET}
+from pinterest.client import raw_client
 
+APP_SECRET = "my_app_key"
+APP_ID = "my_app_id"
+
+my_client = raw_client(APP_ID, APP_SECRET)
