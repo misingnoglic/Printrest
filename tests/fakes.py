@@ -37,7 +37,7 @@ class FakeRequestBuilder(object):
         elif model_type == 'boards':
             return self.handle_boards_path(rest)
         else:
-        return self.api_response, self.bookmark
+            return self.api_response, self.bookmark
 
     def to_printable_url(self):
         return "%s:%s:%s" % (self.method, self.path, self.params)

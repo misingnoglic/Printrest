@@ -1,6 +1,7 @@
 from pinterest.client import raw_client
 
-APP_SECRET = "my_app_key"
-APP_ID = "my_app_id"
+APP_SECRET = "fad954f90dd2e4fbbd344d84cad7828e38383e40"
+APP_ID = "1435561"
 
 my_client = raw_client(APP_ID, APP_SECRET)
+
