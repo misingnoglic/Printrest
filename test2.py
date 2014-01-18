@@ -2,6 +2,8 @@ import urllib2
 import urllib
 import os
 from pinterest.models.model import *
+from PIL import Image
+from imageload import *
 def ListOfURLS(b):
     ListOfPins = b.pins()
     attrs= [x.__dict__['attrs'] for x in ListOfPins]
@@ -25,3 +27,9 @@ b = Board(username+"/"+board)
 URLDIMS = ListOfURLS(b)
 blank = raw_input("Press enter if you are you sure you want to print "+str(len(URLDIMS))+" postcards ($1 each)")
 DownloadPics([i[0][0] for i in URLDIMS])
+accepted = []
+for x in range(len(URLDIMS)):
+    imageshow(x)
+    if GLOBALBOOL:
+        accepted+=URLDIMS[x]
+    GLOBALBOOL = False
