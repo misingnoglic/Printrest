@@ -58,24 +58,40 @@ else:
             os.remove(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\temporary.jpg")
 
 for x in range(len(GoodDims)):
-    #print GoodDims[x][1]
-    width,height =  GoodDims[x][1][0][0],GoodDims[x][1][0][1]
+    #print GoodDims[x]
+    #width,height =  GoodDims[x][1][0][0],GoodDims[x][1][0][1]
     rotat = Image.open(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg")
-    if GoodDims[x][1][0][0]>GoodDims[x][1][0][1]:
-        (rotat.rotate(90,0,1)).save(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg")
+    #print(GoodDims[x][1][0][0],GoodDims[x][1][0][1])
+    width,height = rotat.size
+    print(width,height)
+    if width>height:
+        print("It rotated")
+        (height, width)= (width,height)
+        print(width,height)
+        rotat = (rotat.rotate(90,0,1))#.save(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg")
 
     ##The whitespace format
     bg = Image.open("white4b6.jpg")
-    if (float(height)/width)>=(6.0/4):
+    if (round(float(height)/width,1)==(6.0/4)):
+        big = rotat
+    elif (float(height)/width)>=(6.0/4):    
+        print("thin")
         big = bg.resize(((int(height*(4.0/6))),height))
-        box = (int(height*(4.0/6 - width)/2), 0, width+int(height*(4.0/6 - width)/2), height)
+        print(big.size)
+        print(int(height*(4.0/6)- width)/2)
+        print(width+int((height*(4.0/6) - width)/2))
+        print(height)
+
+        box = ((int(height*(4.0/6)- width)/2), 0, width+int((height*(4.0/6) - width)/2), height)
         big.paste(rotat, box)
-        big.save(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg")
+        
     else:
+        print("too square")
         big = bg.resize((width,int(width*(6.0/4))))
         box = (0,(int((width*(6.0/4)-height)/2)),width, height+(int((width*(6.0/4)-height)/2)))
         big.paste(rotat, box)
-        big.save(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg")
+    big.save(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".pdf", "PDF", resolution = 100)
+    #big.save(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg")#, "PDF", resolution = 100)
 
         
         
