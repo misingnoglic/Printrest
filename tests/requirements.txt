@@ -1,3 +1,0 @@
-nose==1.2.1
-flexmock==0.9.4
-factory_boy==1.1.5

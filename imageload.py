@@ -18,7 +18,7 @@ def imageshow(img):
     global GLOBALBOOL
     GLOBALBOOL= False
     root = tk.Tk()
-    root.title(img[2])
+    root.title(img)
 
     # pick an image file you have .bmp  .jpg  .gif.  .png
     # load the file and covert it to a Tkinter image object
