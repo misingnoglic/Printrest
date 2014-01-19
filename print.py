@@ -73,30 +73,28 @@ for x in range(len(GoodDims)):
         print(width,height)
 
     ##The whitespace format
-    bg = Image.open("white4b6.jpg")
+    bg = Image.open("4in6in.jpg")
+    bgw,bgh = bg.size
     if (round(float(height)/width,1)==(6.0/4)):
-        big = rotat
-    elif (float(height)/width)>=(6.0/4):    
+        rotat = rotat.resize((bgw,bgh))
+    elif (float(height)/width)>(6.0/4):    
         print("thin")
-        big = bg.resize(((int(height*(4.0/6))),height))
-        box = ((int(height*(4.0/6)- width)/2), 0, width+int((height*(4.0/6) - width)/2), height)
+        rotat = rotat.resize(width*int(float(bgh)/height),bgh)
+        box = ((bgw-width)/2,0,width+((bgw-width)/2),height)
         big.paste(rotat, box)
-        
     else:
         print("too square")
-        big = bg.resize((width,int(width*(6.0/4))))
-        box = (0,int(((width*(6.0/4)-height)/2)),width, height+int(((width*(6.0/4)-height)/2)))
-        print(big.size)
-        print(int((width*(6.0/4)-height)/2))
-        print(width)
-        print(height+(int((width*(6.0/4)-height)/2)))
-        big.paste(rotat, box)
-    iw = (int(width)+(int(width)%2))
-    big = big.resize((iw,int(1.5*iw)))
-    bigw,bigh = big.size
-    big.save(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".pdf", "PDF", resolution = float(bigh)/6)
-    
-    #if float(bigh)/bigw != 1.5:
+        rotat = rotat.resize((bgw,height*int(float(bgw)/width)))
+        box = ((0,(bgh-height)/2, bgw, height+((bgh-height)/2)))
+
+#        print(big.size)
+       # print(int((width*(6.0/4)-height)/2))
+       # print(width)
+        #print(height+(int((width*(6.0/4)-height)/2)))
+        bg.paste(rotat, box)
+    #iw = (int(width)+(int(width)%2))
+    #big = big.resize((iw,int(1.5*iw)))
+    bg.save(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".pdf", "PDF", resolution = 100)
     #big.save(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg")#, "PDF", resolution = 100)
 raw_input("You are about to order "+str(len(GoodDims))+" postcards at $1 each. Press enter to continue")
 
