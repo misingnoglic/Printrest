@@ -4,3 +4,6 @@ The biggest challenge was getting the pictures to become a certain size without 
 
 Future additions may include a payment system, chrome extension and mobile app, as well as more customization options.
 
+This was very hacked together (in 36 hours at MHacks), and was made before I had much formal CS knowledge (for example I use a giant list instead of a class to store a list of properties, and it's all done with the command line) but I can't test it anymore, so I won't try to update it.
+
+You can see a video of it running [here](http://printrest.net/demo.html).

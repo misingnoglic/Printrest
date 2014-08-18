@@ -3,10 +3,10 @@ import urllib
 import os
 from pinterest.models.model import * #pinterest API
 from PIL import Image
-from imageload import *
-import imageload
 import lob #Lob API
 import shutil
+import imageload
+from imageload import * #Local file for loading images
 
 def ListOfURLS(b):
     #Takes in a pinterest board and returns a (very convolted) list of URLS and data associate with them
@@ -17,21 +17,26 @@ def ListOfURLS(b):
 
 def DownloadPics(URLS):
     #downloads all pictures in the URL list coming from ListOfURLS
-    if not os.path.exists('C:\Users\Arya\Documents\GitHub\MHacks\pictures'): os.makedirs('C:\Users\Arya\Documents\GitHub\MHacks\pictures')
+    current_directory = os.getcwd()
+    if not os.path.exists(current_directory+'\pictures'):
+        os.makedirs(current_directory+'\pictures')
     x=0
     for pic in URLS:
-        urllib.urlretrieve(pic, "C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg")
+        urllib.urlretrieve(pic, current_directory+"\postcard"+str(x)+".jpg")
         x+=1
 
 def SingleDownload(url):
-    #downloads single URL 
-    if not os.path.exists(r'C:\Users\Arya\Documents\GitHub\MHacks\pictures'): os.makedirs(r'C:\Users\Arya\Documents\GitHub\MHacks\pictures')
-    urllib.urlretrieve(url, r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\temporary.jpg")
+    #downloads single URL
+    current_directory = os.getcwd()
+    if not os.path.exists(current_directory+r'\pictures'):
+        os.makedirs(current_directory+r'\pictures')
+    urllib.urlretrieve(url, current_directory+r"\pictures\temporary.jpg")
 
 lob.api_key = None #Key for Lob development - Taken out for privacy
    	
 CLIENT_ID = None #ID for pinterest - Taken out for privacy
 CLIENT_SECRET = None #secret key for pinterest - Taken out for privacy
+
 Pinterest.configure_client(CLIENT_ID, CLIENT_SECRET)
 
 username = str(raw_input("What is your username: ")) #or username with board on it
@@ -98,13 +103,16 @@ verified_address = lob.AddressVerify.verify(name=name, address_line1=address,
                              address_zip=zipcode)
 
 created_address = lob.Address.create(name='Printrest', address_line1=verified_address.address.address_line1,	
-address_city=verified_address.address.address_city, address_state=verified_address.address.address_state, address_country=verified_address.address.address_country,
-                             address_zip=verified_address.address.address_zip)
+                    address_city=verified_address.address.address_city, address_state=verified_address.address.address_state,
+                    address_country=verified_address.address.address_country,
+                    address_zip=verified_address.address.address_zip)
 
 #go through all files in folder and create postcard of each file
 
 for x in range(len(GoodDims)):
-    lob.Postcard.create(name=name,to=created_address.id,message=GoodDims[x][2][0],front=open(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".pdf",'rb'),from_address=created_address.id).to_dict 
+    lob.Postcard.create(name=name,to=created_address.id,message=GoodDims[x][2][0],
+                        front=open(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".pdf",'rb'),
+                        from_address=created_address.id).to_dict
     print("Printed: "+str(x))
 
 shutil.rmtree('/pictures')
