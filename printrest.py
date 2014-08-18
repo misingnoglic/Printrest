@@ -32,6 +32,8 @@ def SingleDownload(url):
         os.makedirs(current_directory+r'\pictures')
     urllib.urlretrieve(url, current_directory+r"\pictures\temporary.jpg")
 
+picture_directory = os.getcwd()+r'\pictures'
+
 lob.api_key = None #Key for Lob development - Taken out for privacy
    	
 CLIENT_ID = None #ID for pinterest - Taken out for privacy
@@ -58,14 +60,14 @@ else:     #if not skipping
        # print(GLOBALBOOL)
       #  print(imageload.GLOBALBOOL)
         if (imageload.GLOBALBOOL): #if pic wants to be kept, it's made permanant
-            os.rename(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\temporary.jpg",r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(number)+".jpg")
+            os.rename(picture_directory+r"\temporary.jpg",picture_directory+r"\postcard"+str(number)+".jpg")
             GoodDims+=[x] #added to good list
             number+=1 #next good item
         else: #if not needed file will be deleted
-            os.remove(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\temporary.jpg")
+            os.remove(picture_directory+r"\temporary.jpg")
 
 for x in range(len(GoodDims)): #for every good picture
-    rotat = Image.open(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".jpg") #opens pic
+    rotat = Image.open(picture_directory+r"\postcard"+str(x)+".jpg") #opens pic
     width,height = rotat.size 
     if width>height: #if width is greater than height it will be rotated
         rotat = (rotat.rotate(90,0,1))
@@ -87,7 +89,7 @@ for x in range(len(GoodDims)): #for every good picture
     iw = (int(width)+(int(width)%2)) #to have an even width
     big = big.resize((iw,int(1.5*iw))) #this will have 4 by 6 ratio
     bigw,bigh = big.size
-    big.save(r"C:\Users\Arya\Documents\GitHub\MHacks\pictures\postcard"+str(x)+".pdf", "PDF", resolution = float(bigh)/6)
+        big.save(picture_directory+r"\postcard"+str(x)+".pdf", "PDF", resolution = float(bigh)/6)
     ##^^IMPORTANT CODE: THIS SAVED MY LIFE
     
 raw_input("You are about to order "+str(len(GoodDims))+" postcards at $1 each. Press enter to continue")
